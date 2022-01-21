@@ -1524,6 +1524,15 @@ public class WriteRecipes {
         System.out.println("+++++++++++++++++");
     }
     
+    /**
+     * Writes the recipes, by reading the file, 
+     * and then placing the content into a String Array. 
+     * From there it puts the arrays into a recipe
+     * 
+     * @param address the directory address of the file
+     * @param index the recipe being referenced from customrecipes 
+     *              (number lines up with file names ex. cr_2)
+     */
     private void writeRecipe(String address, int index){
         // Create a placeholder String which will contain the needed info
         String[] recipe = new String[3];

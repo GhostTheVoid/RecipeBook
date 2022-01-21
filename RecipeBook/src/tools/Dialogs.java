@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tools;
 
 import java.awt.Color;
@@ -21,12 +16,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.HTMLEditorKit;
+import recipebook.RecipeInputJOption;
 
 /**
  * Dialogs.java - a collection of useful methods for working with dialogs
  *
- * @author Mr. Wachs
- * @since Dec 12, 2017
+ * @author Marissa Rowles
+ * @since Oct 2021
  * @instructor Mr. Wachs
  */
 public class Dialogs {
@@ -109,7 +105,7 @@ public class Dialogs {
      */
     public static String input(String text, Icon icon) {
         // Create graphical display area with formatted text to put in dialog
-        JTextArea area = Dialogs.formatArea(text);
+        JTextArea area = formatArea(text);
         // Store the user's response in a variable from what they typed into
         // a input dialog
         String value = (String) JOptionPane.showInputDialog(null, area, title, 
@@ -123,6 +119,49 @@ public class Dialogs {
                     style, icon, null, "");
         }
         return value;           // Once they have entered a value, return it
+    }
+    
+//    /**
+//     * Asks the user for a string input in a input dialog box
+//     * 
+//     * @param text the text for the dialog box
+//     * @param icon the icon used in the dialog
+//     * @return a valid string
+//     */
+//    public static String inputRecipe(String text, Icon icon) {
+//        // Create graphical display area with formatted text to put in dialog
+//        JTextArea area        = formatArea(text);
+//        JScrollPane inputText = formatInputArea();
+//        // Store the user's response in a variable from what they typed into
+//        // an input dialog.
+//        String value = (String) JOptionPane.showInputDialog(null, area, title, 
+//                style, icon, null, inputText);
+//        // Force a loop if the user left the dialog empty and clicked "ok" or
+//        // they clicked "cancel" or the "X".
+//        while (value == null || value.equals("")) {
+//            // Recreate the graphical display area
+//            area  = Dialogs.formatArea(ERROR_1 + text);
+//            value = (String) JOptionPane.showInputDialog(null, area, title, 
+//                    style, icon, null, "");
+//        }
+//        return value;           // Once they have entered a value, return it.
+//    }
+    
+    /**
+     * Asks the user for a string input in a input dialog box
+     * 
+     * @param text the text for the dialog box
+     * @param icon the icon used in the dialog
+     * @return a valid string
+     */
+    public static String inputRecipe(String text, Icon icon, int height, boolean naming) {
+        System.out.println("reached input");
+        // Initialize the custom Jdialog
+        RecipeInputJOption recipeInput = new RecipeInputJOption(null, true, text, height, naming);
+        // Store the user's response in a variable from what they typed into
+        // an input dialog.
+        String value = recipeInput.getInput();
+        return value;           // Once they have entered a value, return it.
     }
     
     /**
@@ -259,20 +298,59 @@ public class Dialogs {
     public static void output(String text, ImageIcon icon, 
             int width, int height) {
         // Create graphical display area with formatted text to put in dialog
-        JScrollPane label = formatArea(text, width, height);
+        JScrollPane label = formatRecipeArea(text, width, height);
         // Add the display area to the dialog to show the user
         JOptionPane.showMessageDialog(null, label, title, style, icon);
     }
     
     /**
+     * Sets up a fancy display area for the text to display
+     * 
+     * @param text the string of text to format
+     * @return the formatted text area for display
+     */
+    public static JTextArea formatArea(String text) {
+        // Create a graphics object to display the graphical things
+        JTextArea area = new JTextArea();
+        
+        area.setFont(font);
+        area.setBackground(background);
+        area.setText(text);
+        return area;
+    }
+    
+    /**
+     * Sets up a fancy display area for the user to input text
+     * 
+     * @return the formatted text area for display
+     */
+    public static JScrollPane formatInputArea() {
+        // Create a graphics object to display the graphical things
+        JTextArea area = new JTextArea();
+        
+        area.setFont(font);
+        area.setBackground(Color.BLACK);
+        area.setText("HELLO");
+        
+        JScrollPane scroller = new JScrollPane(area);
+        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scroller.setWheelScrollingEnabled(true);
+        scroller.setFont(font);  
+        return scroller;
+    }
+    
+    /**
      * @author Marissa 
+     * 
+     * Formats the text area in which the recipe appears.
      * 
      * @param text the string of text to format
      * @param width the width of the dialog to format
      * @param height the height of the dialog to format
      * @return the formatted text area for display
      */
-    public static JScrollPane formatArea (String text, int width, int height){
+    public static JScrollPane formatRecipeArea (String text, int width, int height){
         // Setup a display area
         JLabel label = new JLabel("<html>" + text + "</html>");
         label.setFont(font);
@@ -293,63 +371,8 @@ public class Dialogs {
         
         return scroller;
     }
+        
     
-    /**
-     * @author Marissa 
-     * 
-     * @param text the string of text to format
-     * @param width the width of the dialog to format
-     * @param height the height of the dialog to format
-     * @return the formatted text area for display
-     */
-    public static JScrollPane formatArea2 (String text, int width, int height){
-        
-        // create a JEditorPane that renders HTML and defaults to the system font.
-        JEditorPane editorPane
-                = new JEditorPane(new HTMLEditorKit().getContentType(), text);
-        // set the text of the JEditorPane to the given text.
-        editorPane.setText(text);
-    
-        // Setup a display area
-        JTextPane pane = new JTextPane();
-        pane.setContentType("text/html"); // let the text pane know this is what you want
-        //Font font = new Font("Serif", Font.ITALIC, 18);
-        //pane.setFont(font);
-        pane.setText("<html> <font face=\"Segoe UI\" size=\"9px\">" + text + "</font></html>");
-        pane.setEditable(false); // as before
-        pane.setBackground(null); // this is the same as a JLabel
-        pane.setBorder(null); // remove the border
-        pane.setPreferredSize(new Dimension(width,height));
-        pane.setBackground(background);
-        pane.setForeground(foreground);
-        
-        // Setup a scrollable area
-        JScrollPane scroller = new JScrollPane(pane);
-        scroller.setPreferredSize(new Dimension(500, 400));
-        //scroller.setBorder(BorderFactory.createEmptyBorder());
-        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scroller.setWheelScrollingEnabled(true);
-        scroller.setFont(font);  
-        
-        return scroller;
-    }
-        
-    /**
-     * Sets up a fancy display area for the text to display
-     * 
-     * @param text the string of text to format
-     * @return the formatted text area for display
-     */
-    public static JTextArea formatArea(String text) {
-        // Create a graphics object to display the graphical things
-        JTextArea area = new JTextArea();
-        
-        area.setFont(font);
-        area.setBackground(background);
-        area.setText(text);
-        return area;
-    }
         
     /**
      * Ask the user if they want to play again, in a dialog box

@@ -1557,7 +1557,7 @@ public class WriteRecipes {
         //Makes a New recipe with the directory files
         custom[index] = new Recipe(recipe[0], recipe[1], recipe[2]);
         System.out.println("Recipe " + index);
-        custom[index].toOutputTest();
+        custom[index].toOutput();
     }
     
     /**

@@ -2,7 +2,7 @@
 package recipebook;
 
 /** 
-* Recipe.java - 
+* Recipe.java - A class of which contains a simple recipe. 
 *
 * @author Marissa Rowles
 * @teacher Mr. Wachs 
@@ -15,6 +15,13 @@ public class Recipe {
     private String[] directions;
     private String source;
     
+    /**
+     * Constructor method changes object properties
+     * 
+     * @param name        The title which will be used 
+     * @param ingredients what ingredients will be listed, sorted into an array
+     * @param directions  what directions will be listed, sorted into an array
+     */
     public Recipe(String name, String[] ingredients, String[] directions){
         this.name = name;
         this.ingredients = ingredients;
@@ -22,6 +29,13 @@ public class Recipe {
         this.source = null;
     }
     
+    /**
+     * Constructor method changes object properties
+     * 
+     * @param name        The title which will be used 
+     * @param ingredients what ingredients will be listed
+     * @param directions  what directions will be listed
+     */
     public Recipe(String name, String ingredients, String directions){
         this.name = name;
         this.ingredients = ingredients.split("[|]");
@@ -29,6 +43,14 @@ public class Recipe {
         this.source = null;
     }
     
+    /**
+     * Constructor method changes object properties
+     * 
+     * @param name        The title which will be used 
+     * @param ingredients what ingredients will be listed
+     * @param directions  what directions will be listed
+     * @param source      The source of this recipe, if needed.
+     */
     public Recipe(String name, String ingredients, 
             String directions, String source){
         this.name = name;
@@ -102,7 +124,7 @@ public class Recipe {
     }
     
     /**
-     * String representation of this object
+     * String representation of the recipe, formatted to work as HTML
      *
      * @return The object represented as a String
      */
@@ -134,34 +156,34 @@ public class Recipe {
         return output;
     }
     
-    /**
-     * The recipe, outputted into the console
-     */
-    public void toOutput() {
-        String output = "";
-        int step = 1;
-        
-        output += "Recipe: " + name + "\n";
-        output += "Ingredients\n";
-        for (int i = 0; i < ingredients.length; i++) {
-            ingredients[i] = ingredients[i].trim();
-            output += "| " + ingredients[i] + "\n";
-        }
-        output += "Directions\n";
-        for (int i = 0; i < directions.length; i++) {
-            directions[i] = directions[i].trim();
-            output += step +  "| " + directions[i] + "\n";
-            step++;
-        }
-        
-        output += "\nTHE RECIPE HAS ENDED\n------------------------------\n";
-        System.out.println(output);
-    }
+//    /**
+//     * The recipe, outputted into the console
+//     */
+//    public void toOutput() {
+//        String output = "";
+//        int step = 1;
+//        
+//        output += "Recipe: " + name + "\n";
+//        output += "Ingredients\n";
+//        for (int i = 0; i < ingredients.length; i++) {
+//            ingredients[i] = ingredients[i].trim();
+//            output += "| " + ingredients[i] + "\n";
+//        }
+//        output += "Directions\n";
+//        for (int i = 0; i < directions.length; i++) {
+//            directions[i] = directions[i].trim();
+//            output += step +  "| " + directions[i] + "\n";
+//            step++;
+//        }
+//        
+//        output += "\nTHE RECIPE HAS ENDED\n------------------------------\n";
+//        System.out.println(output);
+//    }
     
     /**
      * The recipe, outputted into the console
      */
-    public void toOutputTest() {
+    public void toOutput() {
         String output = "";
         int step = 1;
         
@@ -183,8 +205,6 @@ public class Recipe {
             }
             else System.out.println("Directions Error");
         }
-        
         System.out.println(output);
     }
-    
 }

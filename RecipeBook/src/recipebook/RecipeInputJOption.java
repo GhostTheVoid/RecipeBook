@@ -5,7 +5,6 @@
 package recipebook;
 
 import java.awt.*;
-import tools.Text;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.UNINITIALIZED_VALUE;

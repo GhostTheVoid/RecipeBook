@@ -6,14 +6,15 @@ import java.awt.Dialog;
 import java.io.File;
 import recipebook.Recipe;
 import tools.FileHandler;
- import java.time.LocalDate;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import tools.Dialogs;
 
  
 /**
- * ReadCustoms.java - description
+ * ReadCustoms.java - Reads all of the files it finds inside of the 
+ * customrecipes package
  *
  * @author Marissa Rowles
  * @since 22-Nov-2021
@@ -22,15 +23,18 @@ public class ReadCustoms {
 
     // File Name ////////
     private static final String FILE_FIRST_NAME = "C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\customrecipes\\";
-    private static final String FILE_NUM_NAME = "C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\media\\recipeNum.txt";
+    private static final String FILE_NUM_NAME   = "C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\media\\recipeNum.txt";
     
     private static int recipeNum;
     
     // Other ////////
     static LinkedList<String> recipeString;
     
+    /**
+     * Default constructor, set class properties
+     */
     public ReadCustoms(){
-        recipeNum = 0;
+        recipeNum    = 0;
         recipeString = new LinkedList<>();
         System.out.println("++READ CUSTOMS++");
     }

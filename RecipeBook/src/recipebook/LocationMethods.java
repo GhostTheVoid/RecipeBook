@@ -38,7 +38,7 @@ public class LocationMethods {
     }
     
     /**
-     * lists american recipes and lets a choice be made
+     * Lists american recipes and lets the user choose a food type
      */
     private static void listRecipeAmerican() {
         // user chooses which recipe to make 
@@ -53,7 +53,7 @@ public class LocationMethods {
     }
     
     /**
-     * lists Mexican recipes and lets a choice be made
+     * Lists Mexican recipes and lets the user choose a food type
      */
     private static void listRecipeMexican() {
         // user chooses which recipe to make 
@@ -68,7 +68,7 @@ public class LocationMethods {
     }
     
     /**
-     * lists British recipes and lets a choice be made
+     * Lists British recipes and lets the user choose a food type
      */
     private static void listRecipeBritish() {
         // user chooses which recipe to make 
@@ -83,7 +83,7 @@ public class LocationMethods {
     }
     
     /**
-     * lists French recipes and lets a choice be made
+     * lists French recipes and lets the user choose a food type
      */
     private static void listRecipeFrench() {
         // user chooses which recipe to make 
@@ -98,7 +98,7 @@ public class LocationMethods {
     }
     
     /**
-     * lists Italian recipes and lets a choice be made
+     * lists Italian recipes and lets the user choose a food type
      */
     private static void listRecipeItalian() {
         // user chooses which recipe to make 
@@ -113,7 +113,7 @@ public class LocationMethods {
     }
     
     /**
-     * lists Japanese recipes and lets a choice be made
+     * lists Japanese recipes and lets the user choose a food type
      */
     private static void listRecipeJapanese() {
         // user chooses which recipe to make 
@@ -128,7 +128,8 @@ public class LocationMethods {
     }
     
     /**
-     * lists custom recipes from a .txt file and lets a choice be made
+     * lists custom recipes from a .txt file and 
+     * lets the user choose a food type
      */
     private static void listRecipeOriginal() {
         // user chooses which recipe to make 
@@ -175,34 +176,61 @@ public class LocationMethods {
      * Makes a new custom recipe
      */
     private static void newRecipe() {
-//        // Asks the title of the recipe
-        String q1 = Dialogs.input("What is the name of the new recipe?", 
-                Globals.defaultIcon);
-//        // Asks what ingredients are in the recipe, in which the user will use
-//        // "|" character to split them
-//        String q2 = Dialogs.input(
-//                "What ingredients are in the "
-//                        + "recipe (include measurements and "
-//                        + "seperate with the | character)", 
-//                Globals.defaultIcon);
-//        String q3 = Dialogs.input( 
-//                "What are the directions for the "
-//                        + "recipe (seperate with the | character)", 
-//                Globals.defaultIcon);
+        // Asks the title of the recipe
+        String q1 = Dialogs.inputRecipe("What is the name of the new recipe?", 
+                Globals.defaultIcon, 25, true);
+        // Check Q1 for Null
+        if (q1 == null || q1.equals("")){ 
+            JOptionPane.showMessageDialog(null, "Title Empty!", 
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            q1 = Dialogs.inputRecipe("What is the name of the new recipe?", 
+                Globals.defaultIcon, 25, true);
+        }
+        // Asks what ingredients are in the recipe, in which the user will use
+        // "|" character to split them
+        String q2 = Dialogs.inputRecipe(
+                "What ingredients are in the "
+                + "recipe? (include measurements and "
+                + "seperate with the | character)", 
+                Globals.defaultIcon, 112, false);
+        // Check Q2 for Null
+        if (q2 == null || q2.equals("")){ 
+            JOptionPane.showMessageDialog(null, "Ingredients Empty!", 
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            q2 = Dialogs.inputRecipe(
+                "What ingredients are in the "
+                + "recipe?(include measurements and "
+                + "seperate with the | character)", 
+                Globals.defaultIcon, 112, false);
+        }
+        String q3 = Dialogs.inputRecipe( 
+                "What are the directions for the "
+                + "recipe? <br>(seperate with the | character)", 
+                Globals.defaultIcon, 112, false);
+        // Check Q3 for Null
+        if (q3 == null || q3.equals("")){ 
+            JOptionPane.showMessageDialog(null, "Directions Empty!", 
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            q3 = Dialogs.inputRecipe( 
+                "What are the directions for the "
+                + "recipe? <br>(seperate with the | character)", 
+                Globals.defaultIcon, 112, false);
+        }
+        
         
         // TEMPORARY!!!
         //String q1 = "Garlic Bread (CUSTOM)";
-        String q2 = "4 cloves garlic, minced| ½ cup (1 stick) butter, softened|"
-                + "1 baguette or French bread, cut lengthwise|"
-                + "½ tsp. kosher salt| 2 tbsp. freshly chopped parsley|"
-                + "¼ cup grated Parmesan";
-        String q3 = "Preheat oven to 425° and line a large baking sheet with "
-                + "foil. Make garlic compound butter: In a small bowl, "
-                + "mix softened butter with garlic, salt, and parsley until "
-                + "well combined.| Spread cut sides of bread liberally with "
-                + "garlic butter. Sprinkle with Parmesan.| "
-                + "Bake until bread is toasty and golden at the edges, "
-                + "about 10 minutes.";
+//        String q2 = "4 cloves garlic, minced| ½ cup (1 stick) butter, softened|"
+//                + "1 baguette or French bread, cut lengthwise|"
+//                + "½ tsp. kosher salt| 2 tbsp. freshly chopped parsley|"
+//                + "¼ cup grated Parmesan";
+//        String q3 = "Preheat oven to 425° and line a large baking sheet with "
+//                + "foil. Make garlic compound butter: In a small bowl, "
+//                + "mix softened butter with garlic, salt, and parsley until "
+//                + "well combined.| Spread cut sides of bread liberally with "
+//                + "garlic butter. Sprinkle with Parmesan.| "
+//                + "Bake until bread is toasty and golden at the edges, "
+//                + "about 10 minutes.";
         
         // /////////////
         
@@ -210,7 +238,9 @@ public class LocationMethods {
 //        String[] directions  = q3.split("[|]");
 
         if (q1.isEmpty() || q2.isEmpty() || q3.isEmpty() ) {
-            throw new NullPointerException("One of the questions is empty");
+            
+            throw new NullPointerException("One of the questions is empty. "
+                    + "Please try again");
         }
         
         NewRecipe nr = new NewRecipe(q1, q2, q3);

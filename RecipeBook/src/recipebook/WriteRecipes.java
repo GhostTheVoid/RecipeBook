@@ -1489,7 +1489,7 @@ public class WriteRecipes {
         // </editor-fold>  
         
         write();
-        System.out.println("Escaped");
+        System.out.println("++Set up Complete++");
         
         Globals.start();
         //System.exit(0);

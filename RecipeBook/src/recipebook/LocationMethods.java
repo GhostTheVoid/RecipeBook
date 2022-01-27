@@ -25,141 +25,43 @@ public class LocationMethods {
                 "What type of food do you want to make?", 
                 WriteRecipes.INTERNATIONAL, true, Globals.defaultIcon);
         
+        System.out.println(type);
+
         // from the choice made, selects what type of food to list
         switch (type) {
-            case 0:  listRecipeAmerican();   break;
-            case 1:  listRecipeMexican();    break;
-            case 2:  listRecipeBritish();    break;
-            case 3:  listRecipeFrench();     break;
-            case 4:  listRecipeItalian();    break;
-            case 5:  listRecipeJapanese();   break;
-            case 6:  recipeOriginal();       break; 
+            case 0:  listRecipe(WriteRecipes.american, "American"); break;
+            case 1:  listRecipe(WriteRecipes.mexican,  "Mexican");  break;
+            case 2:  listRecipe(WriteRecipes.british,  "British");  break;
+            case 3:  listRecipe(WriteRecipes.french,   "French");   break;
+            case 4:  listRecipe(WriteRecipes.italian,  "Italian");  break;
+            case 5:  listRecipe(WriteRecipes.japanese, "Japanese"); break;
+            case 6:  recipeOriginal();                              break;
+            case 7:  System.exit(0);                                break;
+            case 8:  System.exit(0);                                break;
         }
     }
     
     /**
-     * Lists american recipes and lets the user choose a food type
-     */
-    private static void listRecipeAmerican() {
-        // user chooses which recipe to make 
-        int type = Dialogs.chooseArray(
-                "What American recipe would you like to make?", 
-                getRecipeNames(WriteRecipes.american), 
-                false, Globals.defaultIcon);
-        
-        // Puts the given recipe into a String
-        String recipe = Globals.createFood.american[type].toString();
-        outputRecipe(recipe);
-    }
-    
-    /**
-     * Lists Mexican recipes and lets the user choose a food type
-     */
-    private static void listRecipeMexican() {
-        // user chooses which recipe to make 
-        int type = Dialogs.chooseArray(
-                "What Mexican recipe would you like to make?", 
-                getRecipeNames(WriteRecipes.mexican), 
-                false, Globals.defaultIcon);
-        
-        // Puts the given recipe into a String
-        String recipe = Globals.createFood.mexican[type].toString();
-        outputRecipe(recipe);
-    }
-    
-    /**
-     * Lists British recipes and lets the user choose a food type
-     */
-    private static void listRecipeBritish() {
-        // user chooses which recipe to make 
-        int type = Dialogs.chooseArray(
-                "What British recipe would you like to make?", 
-                getRecipeNames(WriteRecipes.british), 
-                false, Globals.defaultIcon);
-        
-        // Puts the given recipe into a String
-        String recipe = Globals.createFood.british[type].toString();
-        outputRecipe(recipe);
-    }
-    
-    /**
-     * lists French recipes and lets the user choose a food type
-     */
-    private static void listRecipeFrench() {
-        // user chooses which recipe to make 
-        int type = Dialogs.chooseArray(
-                "What French recipe would you like to make?", 
-                getRecipeNames(WriteRecipes.french), 
-                false, Globals.defaultIcon );
-        
-        // Puts the given recipe into a String
-        String recipe = Globals.createFood.french[type].toString();
-        outputRecipe(recipe);
-    }
-    
-    /**
-     * lists Italian recipes and lets the user choose a food type
-     */
-    private static void listRecipeItalian() {
-        // user chooses which recipe to make 
-        int type = Dialogs.chooseArray(
-                "What Italian recipe would you like to make?", 
-                getRecipeNames(WriteRecipes.italian), 
-                false, Globals.defaultIcon);
-        
-        // Puts the given recipe into a String
-        String recipe = Globals.createFood.italian[type].toString();
-        outputRecipe(recipe);
-    }
-    
-    /**
-     * lists Japanese recipes and lets the user choose a food type
-     */
-    private static void listRecipeJapanese() {
-        // user chooses which recipe to make 
-        int type = Dialogs.chooseArray(
-                "What Japanese recipe would you like to make?", 
-                getRecipeNames(WriteRecipes.japanese), 
-                false, Globals.defaultIcon);
-        
-        // Puts the given recipe into a String
-        String recipe = Globals.createFood.japanese[type].toString();
-        outputRecipe(recipe);
-    }
-    
-    /**
-     * lists custom recipes from a .txt file and 
-     * lets the user choose a food type
-     */
-    private static void listRecipeOriginal() {
-        // user chooses which recipe to make 
-        int type = Dialogs.chooseArray(
-                "What Custom recipe would you like to make?", 
-                getRecipeNames(WriteRecipes.custom), 
-                false, Globals.defaultIcon);
-        
-        // Puts the given recipe into a String
-        String recipe = Globals.createFood.custom[type].toString();
-        outputRecipe(recipe);
-    }
-    
-    /**
-     * Shows a message dialog which shows how to make the recipe
+     * Lists recipes and lets the user choose a food type from a list
      * 
-     * @param recipe The contents of which recipe was chosen
+     * @param <T>   Recipe objects, stored into an array
+     * @param array An array of Recipes from a specific origin
+     * @param type  The name of a Recipes origin location
      */
-    private static void outputRecipe (String recipe){
-        // Calculate the size of the dialog via the length of the string
-        // Base Height = 400 || Text Height = 12 
-        int   math   = Dialogs.getFontSize() * recipe.length() / 400;
-        float height = 11.25f * math;
-        if (height < 400) height -= 75;
-        else if (height > 2000) height /= 1.7f;
+    private static <T extends Recipe> void listRecipe (T[] array, String type){
+        // user chooses which recipe to make 
+        int choice = Dialogs.chooseArray(
+                "What " + type + " recipe would you like to make?", 
+                getRecipeNames(array), 
+                false, Globals.defaultIcon);
         
-        // Output string into a formatted message dialog
-        Dialogs.output("<p style=\"color:#696969;\"><i>"
-                + "(An ingredient with a *, means that it is optional)</i></p>" 
-                + recipe, Globals.foodIcon, 375, (int)height);
+        if (choice >= array.length) {
+            makeWhat();
+        } else {
+            // Puts the given recipe into a String
+            String recipe = array[choice].toString();
+            outputRecipe(recipe, false);
+        }
     }
     
     /**
@@ -168,8 +70,24 @@ public class LocationMethods {
     private static void recipeOriginal() {
         boolean bool = Dialogs.yesNo("Are you making a new recipe?", 
                 Globals.defaultIcon);
-        if (bool) newRecipe();     // Makes a new custom recipe
-        else listRecipeOriginal(); // Gets custom recipes from a file
+        if (bool) newRecipe();
+        else checkRecipeFolder();
+    }
+    
+    /**
+     * Prevents a null error, by checking if the original recipe folder is
+     * empty. If it is, the 
+     */
+    private static void checkRecipeFolder() {
+        System.out.println("GOD HELP ME");
+        int recipeCount = Globals.createFood.getCustomRecipeCount();
+        
+        if (recipeCount <= 0) {
+            Dialogs.output("Your recipes folder is empty!", 
+                            Globals.defaultIcon);
+            recipeOriginal();
+        } 
+        else listRecipe(WriteRecipes.custom, "Custom");
     }
 
     /**
@@ -185,6 +103,9 @@ public class LocationMethods {
                     "ERROR", JOptionPane.ERROR_MESSAGE);
             q1 = Dialogs.inputRecipe("What is the name of the new recipe?", 
                 Globals.defaultIcon, 25, true);
+        } else if (q1.equals("Cancel")) {
+            makeWhat();
+            return;
         }
         // Asks what ingredients are in the recipe, in which the user will use
         // "|" character to split them
@@ -202,6 +123,9 @@ public class LocationMethods {
                 + "recipe?(include measurements and "
                 + "seperate with the | character)", 
                 Globals.defaultIcon, 112, false);
+        } else if (q2.equals("Cancel")) {
+            makeWhat();
+            return;
         }
         String q3 = Dialogs.inputRecipe( 
                 "What are the directions for the "
@@ -215,6 +139,10 @@ public class LocationMethods {
                 "What are the directions for the "
                 + "recipe? <br>(seperate with the | character)", 
                 Globals.defaultIcon, 112, false);
+        }
+        else if (q3.equals("Cancel")) {
+            makeWhat();
+            return;
         }
         
         
@@ -245,7 +173,43 @@ public class LocationMethods {
         
         NewRecipe nr = new NewRecipe(q1, q2, q3);
         
-        outputRecipe(nr.toString());
+        outputRecipe(nr.toString(), true);
+    }
+    
+    private static String customQuestions(String type, String text, int height){
+        String input = Dialogs.inputRecipe(text, 
+                Globals.defaultIcon, 25, true);
+        // Check input for Null
+        if (input == null || input.equals("")){ 
+            JOptionPane.showMessageDialog(null, type + " Empty!", 
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            input = Dialogs.inputRecipe(text, 
+                Globals.defaultIcon, 25, true);
+        } else if (input.equals("Cancel")) {
+            makeWhat();
+            return "Cancel";
+        }
+        
+        return input;
+    } 
+    
+    /**
+     * Shows a message dialog which shows how to make the recipe
+     * 
+     * @param recipe The contents of which recipe was chosen
+     */
+    private static void outputRecipe (String recipe, boolean original){
+        // Calculate the size of the dialog via the length of the string
+        // Base Height = 400 || Text Height = 12 
+        int   math   = Dialogs.getFontSize() * recipe.length() / 400;
+        float height = 11.25f * math;
+        if (height < 400) height -= 75;
+        else if (height > 2000) height /= 1.7f;
+        
+        // Output string into a formatted message dialog
+        Dialogs.outputRecipe("<p style=\"color:#696969; font-size: 12; margin-top: 2px;\">"
+                + "<i>(An ingredient with a *, means that it is optional)</i>"
+                + "</p>" + recipe, Globals.foodIcon, 375, (int)height, original);
     }
     
     /**

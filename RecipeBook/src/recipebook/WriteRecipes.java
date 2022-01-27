@@ -1562,9 +1562,11 @@ public class WriteRecipes {
     
     /**
      * returns the amount of custom recipes available
+     * 
      * @return the amount of custom recipes
      */
     public int getCustomRecipeCount (){
+        System.out.println("received");
         return recipeCount;
     }
     

@@ -1,21 +1,13 @@
 package tools;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.AffineTransform;
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.text.html.HTMLEditorKit;
 import recipebook.OutputRecipeJDialog;
 import recipebook.RecipeInputJOption;
 
@@ -269,7 +261,7 @@ public class Dialogs {
      */
     public static void outputRecipe(String text, ImageIcon icon, 
             int width, int height, boolean original) {
-        OutputRecipeJDialog outputRecipee = new OutputRecipeJDialog(null, true,
+        OutputRecipeJDialog outputRecipe = new OutputRecipeJDialog(null, true,
                 original, text, width, height);
     }
     

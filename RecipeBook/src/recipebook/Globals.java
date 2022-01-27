@@ -2,11 +2,13 @@
 package recipebook;
 
 import javax.swing.ImageIcon;
+import tools.Dialogs;
 import tools.Image;
 
  
 /**
- * Globals.java - description
+ * Globals.java - This Class acts as a site to store variables 
+ * and methods that will be used across this program
  *
  * @author Marissa Rowles
  * @since 5-Nov-2021
@@ -26,12 +28,13 @@ public class Globals {
      */
     public Globals() {
         // Sets up the two icons
+        createFood  = new WriteRecipes();
         defaultIcon = setImage(defaultImage);
         foodIcon    = setImage(foodImage);
     }
     
     /**
-     * sets an image of an object
+     * Sets an image of an object
      * 
      * @param imageFile the location of the image
      * @return an icon made from the imageFile
@@ -42,11 +45,26 @@ public class Globals {
     }
     
     /**
-     * Starts the application and welcomes user with a dialog
+     * Starts the application via <code>StartMenu()</code> 
+     * and welcomes user with a dialog
      */
     public static void start() {
         StartMenu startMenu = new StartMenu();
         startMenu.setVisible(true);
+    }
+    
+    /**
+     * If there is no forms opened/opening, asks the user if they would like to
+     * restart the program,
+     * which will either re-instantiates 
+     * <code>WriteRecipes()</code>, or ends the application with 
+     * <code>System.exit(0)</code>.
+     */
+    public static void restartProgram(){
+        boolean yesNo = Dialogs.playAgain(foodIcon);
+        
+        if (yesNo) createFood = new WriteRecipes();
+        else System.exit(0);
     }
      
     /**

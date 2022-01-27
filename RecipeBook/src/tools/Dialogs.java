@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.HTMLEditorKit;
+import recipebook.OutputRecipeJDialog;
 import recipebook.RecipeInputJOption;
 
 /**
@@ -30,15 +31,13 @@ public class Dialogs {
     
     private static final  int    DEFAULT_FONT_SIZE    = 12;
     private static final  int    DEFAULT_FONT_TYPE    = Font.PLAIN;
-    private static final  int    DEFAULT_STYLE        = 
-            JOptionPane.INFORMATION_MESSAGE;
+    private static final  int    DEFAULT_STYLE        = JOptionPane.INFORMATION_MESSAGE;
     private static final  int    DEFAULT_RED_COLOR    = 238;
     private static final  int    DEFAULT_GREEN_COLOR  = 238;
     private static final  int    DEFAULT_BLUE_COLOR   = 238;
     private static final  String DEFAULT_TITLE        = "The Kitchen";
     private static final  String DEFAULT_FONT_FACE    = "Segoe UI"; 
-    private static final  Icon   DEFAULT_ICON_PICTURE = new ImageIcon
-        ("/media/Kitchen.png");
+    private static final  Icon   DEFAULT_ICON_PICTURE = new ImageIcon("/media/Kitchen.png");
     
     private static final  String ERROR_1 = "Error, please try again\n\n";
     private static final  String ERROR_2 = "Error, invalid number\n\n";
@@ -121,32 +120,6 @@ public class Dialogs {
         return value;           // Once they have entered a value, return it
     }
     
-//    /**
-//     * Asks the user for a string input in a input dialog box
-//     * 
-//     * @param text the text for the dialog box
-//     * @param icon the icon used in the dialog
-//     * @return a valid string
-//     */
-//    public static String inputRecipe(String text, Icon icon) {
-//        // Create graphical display area with formatted text to put in dialog
-//        JTextArea area        = formatArea(text);
-//        JScrollPane inputText = formatInputArea();
-//        // Store the user's response in a variable from what they typed into
-//        // an input dialog.
-//        String value = (String) JOptionPane.showInputDialog(null, area, title, 
-//                style, icon, null, inputText);
-//        // Force a loop if the user left the dialog empty and clicked "ok" or
-//        // they clicked "cancel" or the "X".
-//        while (value == null || value.equals("")) {
-//            // Recreate the graphical display area
-//            area  = Dialogs.formatArea(ERROR_1 + text);
-//            value = (String) JOptionPane.showInputDialog(null, area, title, 
-//                    style, icon, null, "");
-//        }
-//        return value;           // Once they have entered a value, return it.
-//    }
-    
     /**
      * Asks the user for a string input in a input dialog box
      * 
@@ -209,12 +182,12 @@ public class Dialogs {
      * @return a valid integer
      */
     public static int inputInteger(String text, int minimum, int maximum, ImageIcon icon) {
-        String value = input(text, icon);                 // Get user's response
+        String value = input(text, icon);           // Get user's response
         int number = 0;                             // Variable to store value
         boolean done = false;                       // Flag to keep trying
         while (!done) {                             // Loop until valid
-            if (Numbers.isInteger(value) == false) {    // Not a valid integer
-                value = input(ERROR_2 + text, icon);      // Input again with message
+            if (Numbers.isInteger(value) == false) { // Not a valid integer
+                value = input(ERROR_2 + text, icon); // Input again with message
             }
             else {
                 number = Integer.parseInt(value);   // Convert to integer
@@ -222,11 +195,12 @@ public class Dialogs {
                     done = true;                    // Number is in range
                 }
                 else {
-                    value = input(ERROR_3 + text, icon); // Not in range, input again
+                    // Not in range, input again
+                    value = input(ERROR_3 + text, icon); 
                 }
             }            
         }
-        return number;                          // Return valid integer
+        return number;  // Return valid integer
     }
     
     /**
@@ -274,7 +248,6 @@ public class Dialogs {
     }
     
     /**
-     * @author Marissa
      * If an error is to occur, A message dialog will 
      * appear detailing what happened.
      * 
@@ -287,20 +260,17 @@ public class Dialogs {
     }
     
     /**
-     * @author Marissa
-     * Outputs text in a more visual graphical dialog 
+     * Outputs the recipe in <code>OutputRecipeJDialog()</code>
      * 
      * @param text the text to display
      * @param icon the icon used in the dialog
      * @param width the width of the dialog
      * @param height the height of the dialog
      */
-    public static void output(String text, ImageIcon icon, 
-            int width, int height) {
-        // Create graphical display area with formatted text to put in dialog
-        JScrollPane label = formatRecipeArea(text, width, height);
-        // Add the display area to the dialog to show the user
-        JOptionPane.showMessageDialog(null, label, title, style, icon);
+    public static void outputRecipe(String text, ImageIcon icon, 
+            int width, int height, boolean original) {
+        OutputRecipeJDialog outputRecipee = new OutputRecipeJDialog(null, true,
+                original, text, width, height);
     }
     
     /**
@@ -341,40 +311,6 @@ public class Dialogs {
     }
     
     /**
-     * @author Marissa 
-     * 
-     * Formats the text area in which the recipe appears.
-     * 
-     * @param text the string of text to format
-     * @param width the width of the dialog to format
-     * @param height the height of the dialog to format
-     * @return the formatted text area for display
-     */
-    public static JScrollPane formatRecipeArea (String text, int width, int height){
-        // Setup a display area
-        JLabel label = new JLabel("<html>" + text + "</html>");
-        label.setFont(font);
-        label.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        label.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        label.setPreferredSize(new Dimension(width,height));
-        label.setBackground(background);
-        label.setForeground(foreground);
-        
-        // Setup a scrollable area
-        JScrollPane scroller = new JScrollPane(label);
-        scroller.setPreferredSize(new Dimension(500, 400));
-        //scroller.setBorder(BorderFactory.createEmptyBorder());
-        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scroller.setWheelScrollingEnabled(true);
-        scroller.setFont(font);  
-        
-        return scroller;
-    }
-        
-    
-        
-    /**
      * Ask the user if they want to play again, in a dialog box
      * 
      * @param icon the icon used in the dialog
@@ -383,18 +319,6 @@ public class Dialogs {
     public static boolean playAgain(ImageIcon icon) {
         // Send the yesNo method the play again message
         return yesNo("Do you want to play again?", icon);
-    }
-    
-    /**
-     * Ask the user if they want to go back to the kitchen, in a dialog box
-     * 
-     * @param text the context of what you are doing
-     * @param icon the icon used in the dialog
-     * @return true (yes, go back to the kitchen), false (no)
-     */
-    public static boolean goBack(String text, ImageIcon icon) {
-        // Send the yesNo method the play again message
-        return yesNo(text + "Go Back?", icon);
     }
             
     /**
@@ -413,12 +337,14 @@ public class Dialogs {
         Object object = JOptionPane.showInputDialog(null, area, title, 
                                              style, icon, 
                                              options, options[0]);
-        if (object == null)  return "";                 // User selects "X"
+        if (object == null)  return null;               // User selects "X"
         else                 return object.toString();  // Return user's choice
     } 
     
     /**
-     * Turns the string from Dialogs.choices into an int from the array used.
+     * Turns the string from 
+     * <code>{@link #choices(String, String[], ImageIcon)}</code> 
+     * into an int from the array used.
      * 
      * @param context the context of which goes into choices
      * @param array which array will be used
@@ -428,6 +354,7 @@ public class Dialogs {
     public static int chooseArray (String context, String[] array, 
             boolean textCase, ImageIcon icon){
         String type = choices(context, array, icon);
+        if (type == null || type.equals("")) return array.length + 1;
         if (textCase == true) type.toUpperCase();
         
         // Compares the "type" to the contents of the "array", 

@@ -2,14 +2,8 @@
 package recipebook;
 
 import collections.LinkedList;
-import java.awt.Dialog;
 import java.io.File;
-import recipebook.Recipe;
 import tools.FileHandler;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import javax.swing.JOptionPane;
-import tools.Dialogs;
 
  
 /**
@@ -121,21 +115,5 @@ public class ReadCustoms {
 
         String[] recipe = {name, ingredients, directions};
         return recipe;
-    }
-    
-    /**
-     * Gets the date from the system, and formats it into a "dd/MM/yyyy" format
-     * @return the date in the form of a String
-     */
-    private static String getDate() {
-        LocalDate myObj = LocalDate.now(); // Create a date object
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        
-        String date = myFormatObj.format(myObj);
-        return date;
-    }
-
-    public static void restartReading() {
-        
     }
 }

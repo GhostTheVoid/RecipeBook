@@ -21,20 +21,17 @@ import tools.Dialogs;
  */
 public class ReadCustoms {
 
-    // File Name ////////
+    // File Names ////////
     private static final String FILE_FIRST_NAME = "C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\customrecipes\\";
-    private static final String FILE_NUM_NAME   = "C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\media\\recipeNum.txt";
     
     private static int recipeNum;
-    
-    // Other ////////
-    static LinkedList<String> recipeString;
+    private static LinkedList<String> recipeString;
     
     /**
      * Default constructor, set class properties
      */
     public ReadCustoms(){
-        recipeNum    = 0;
+        recipeNum    = getPackCount();
         recipeString = new LinkedList<>();
         System.out.println("++READ CUSTOMS++");
     }
@@ -42,8 +39,7 @@ public class ReadCustoms {
     /**
      * Counts how many files there are in "customrecipes"
      * 
-     * @return the amount of files, accounting for ReadCustoms.java 
-     * and taking away one
+     * @return the amount of files
      */
     public static int getPackCount (){
         int readFiles = new File("C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\customrecipes").list().length;
@@ -52,9 +48,9 @@ public class ReadCustoms {
     }
     
     /**
-     * Gets the names of the files in customrecipes, minus this java file. 
+     * Gets the names of the files in customrecipes. 
      * 
-     * @return a String array which contains all the file names, minus this file.
+     * @return an array which contains all the file names in customrecipes
      */
     public static String[] getPackNames() {
         String[] readFiles = new File("C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\customrecipes").list();
@@ -77,7 +73,7 @@ public class ReadCustoms {
         System.out.println("Writing file.............");
         // Write File ////////
         String fullFileName  = FILE_FIRST_NAME 
-                + "cr_" + recipeNum + " (" + getDate() + ").txt";
+                + "cr_" + recipeNum + " (" + fileName + ").txt";
         
         FileHandler fileHandler = new FileHandler(fullFileName);
         
@@ -99,7 +95,7 @@ public class ReadCustoms {
      * the parameters for the class Recipe by reading the lines.
      * 
      * @param fileName the given name of the file
-     * @return 
+     * @return An array containing the data to make a <code>Recipe()</code>
      */
     public static String[] readRecipe (String fileName){
         LinkedList<String> recipeStr = new LinkedList<>();
@@ -108,11 +104,9 @@ public class ReadCustoms {
         FileHandler fileHandler = new FileHandler(fileName);
         recipeStr = fileHandler.read();
 
-        //Read Name
+        //Read the file's contents via their line index
         String name = recipeStr.get(0);
-        //Read Ingredients
         String ingredients = recipeStr.get(1);
-        //Read Directions
         String directions = recipeStr.get(2);
         
         System.out.println("Reading file: " + "\"" + name + "\"" );
@@ -127,41 +121,6 @@ public class ReadCustoms {
 
         String[] recipe = {name, ingredients, directions};
         return recipe;
-    }
-    
-    /**
-     * Reads "recipeNum.txt" which contains the number of Custom recipes made
-     * 
-     * @return returns the number of Custom recipes made
-     */
-    private static int readNum (){
-        LinkedList<String> string = new LinkedList<>();
-        FileHandler fileHandler = new FileHandler(FILE_NUM_NAME);
-        string = fileHandler.read();
-        
-        String getNum = string.get(0);
-        recipeNum = Integer.parseInt(getNum);
-        System.out.println(recipeNum);
-        
-        //Update the number for the next time a custom recipe is made
-        updateNum(); 
-        
-        return recipeNum;   
-    }
-
-    /**
-     * Update the number inside of "recipeNum.txt" to increase by one.
-     */
-    private static void updateNum (){
-        recipeNum++;
-        FileHandler fileHandler = new FileHandler(FILE_NUM_NAME);
-        LinkedList<String> list = new LinkedList<>();
-        
-        String num = Integer.toString(recipeNum);
-        System.out.println(num);
-        list.add(num);
-        
-        fileHandler.write(list);
     }
     
     /**

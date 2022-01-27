@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ */
 package recipebook;
 
 import java.awt.*;
@@ -38,6 +42,7 @@ public class RecipeInputJOption extends javax.swing.JDialog {
         this.naming         = naming;
         initComponents();
         setSize(new Dimension(396, 300));
+        
     }
 
     /**
@@ -77,31 +82,16 @@ public class RecipeInputJOption extends javax.swing.JDialog {
         bgPanel.setLayout(null);
 
         contentScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        contentScrollPane.setToolTipText("");
-        contentScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        contentScrollPane.setMaximumSize(new java.awt.Dimension(269, 32767));
-        contentScrollPane.setMinimumSize(new java.awt.Dimension(268, 25));
-        contentScrollPane.setName(""); // NOI18N
-        contentScrollPane.setOpaque(false);
-        contentScrollPane.setPreferredSize(new Dimension(268, textAreaHeight));
-        contentScrollPane.setSize(268, textAreaHeight);
 
-        contentTextArea.setBackground(javax.swing.UIManager.getDefaults().getColor("Label.background"));
+        contentTextArea.setColumns(20);
         contentTextArea.setLineWrap(true);
         contentTextArea.setRows(5);
-        contentTextArea.setToolTipText("");
-        contentTextArea.setMaximumSize(new java.awt.Dimension(268, 152));
-        contentTextArea.setMinimumSize(new java.awt.Dimension(268, 25));
-        contentTextArea.setPreferredSize(new Dimension(268, textAreaHeight)
-        );
-        contentTextArea.setSize(268, textAreaHeight);
-        //contentTextArea.getDocument().addDocumentListener(new MyDocumentListener());
-        //contentTextArea.getDocument().putProperty("name", "Text Area");
+        contentTextArea.setWrapStyleWord(true);
+        contentTextArea.setMinimumSize(new java.awt.Dimension(112, 20));
         contentScrollPane.setViewportView(contentTextArea);
 
         bgPanel.add(contentScrollPane);
-        contentScrollPane.setBounds(91, 51, 268, 2);
-        contentScrollPane.setBounds(91, 51, 268, textAreaHeight);
+        contentScrollPane.setBounds(91, 51, 268, 140);
 
         okButton.setText("OK");
         okButton.addActionListener(new java.awt.event.ActionListener() {
@@ -147,8 +137,7 @@ public class RecipeInputJOption extends javax.swing.JDialog {
      * @param evt 
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        input = null;
-        System.exit(0);
+        input = "Cancel";
         this.dispose();
     }                                            
 
@@ -226,13 +215,12 @@ public class RecipeInputJOption extends javax.swing.JDialog {
             setLabelTxt(ERROR_NULL + questionType 
                                 + "</p></body></html>");
         }
-        else if (text.length() > 40){
-            if (naming){
-                setLabelTxt(ERROR_LENGTH + questionType 
+        else if (naming && text.length() > 40){
+            setLabelTxt(ERROR_LENGTH + questionType 
                                     + "</p></body></html>");
-            }
         }
         else {
+            System.out.println("Dispose Recipe input");
             input = text;
             this.dispose();
         }

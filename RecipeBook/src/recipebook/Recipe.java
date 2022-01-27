@@ -1,8 +1,11 @@
 /** Required package class namespace */
 package recipebook;
 
+import tools.HTMLFormatting;
+
 /** 
 * Recipe.java - A class of which contains a simple recipe. 
+* It will contain a Name, an array of Ingredients, and an array of Directions.
 *
 * @author Marissa Rowles
 * @teacher Mr. Wachs 
@@ -14,6 +17,8 @@ public class Recipe {
     private String[] ingredients;
     private String[] directions;
     private String source;
+    
+    HTMLFormatting html;
     
     /**
      * Constructor method changes object properties
@@ -124,7 +129,8 @@ public class Recipe {
     }
     
     /**
-     * String representation of the recipe, formatted to work as HTML
+     * String representation of the recipe, 
+     * formatted to work with HTML formatting
      *
      * @return The object represented as a String
      */
@@ -133,55 +139,31 @@ public class Recipe {
         String output = "";
         int step = 1;
         
-        output += "<p><b>Recipe:</b> " + name + "</p>"; 
-        output += "<p><b>Ingredients</b></p>";
+        output += "<h1 " + html.h1Style + "\">Recipe: <span style=\"font-size: 90%;\">" + name + "</span></h1>"; 
+        output += "<h2 " + html.h2Style + "\"><b>Ingredients</b></h2>";
         for (int i = 0; i < ingredients.length; i++) {
             ingredients[i] = ingredients[i].trim();
-            output += "<p><b>|</b> " + ingredients[i] + "</p>";
+            output += "<p " + html.pStyle + "\"><b>|</b> " + ingredients[i] + "</p>";
         }
-        output += "<p><b>Directions</b></p>";
+        output += "<h2 " + html.h2Style + "\"><b>Directions</b></h2>";
         for (int i = 0; i < directions.length; i++) {
             directions[i] = directions[i].trim();
-            output += "<p><b>" + step +  "|</b> " + directions[i] + "</p>";
+            output += "<p " + html.pStyle + "\"><b>" + step + "|</b> " + directions[i] + "</p>";
             step++;
         }
         if (source == null || source.isEmpty()) {
             System.out.println("Source = null");
         } else {
             output += "<hr noshade>" + 
-                    "<p><b>Source:</b> <u>" + source + "</u></p>";
+                    "<p><b>Source:</b> <u style=\"color:#0000FF;\">" + source + "</u></p>";
         }
         
         //output += "<p><b>THE RECIPE HAS ENDED</b></p>";
         return output;
     }
     
-//    /**
-//     * The recipe, outputted into the console
-//     */
-//    public void toOutput() {
-//        String output = "";
-//        int step = 1;
-//        
-//        output += "Recipe: " + name + "\n";
-//        output += "Ingredients\n";
-//        for (int i = 0; i < ingredients.length; i++) {
-//            ingredients[i] = ingredients[i].trim();
-//            output += "| " + ingredients[i] + "\n";
-//        }
-//        output += "Directions\n";
-//        for (int i = 0; i < directions.length; i++) {
-//            directions[i] = directions[i].trim();
-//            output += step +  "| " + directions[i] + "\n";
-//            step++;
-//        }
-//        
-//        output += "\nTHE RECIPE HAS ENDED\n------------------------------\n";
-//        System.out.println(output);
-//    }
-    
     /**
-     * The recipe, outputted into the console
+     * The recipe, outputted into the console to check for errors
      */
     public void toOutput() {
         String output = "";
@@ -207,4 +189,5 @@ public class Recipe {
         }
         System.out.println(output);
     }
+    
 }

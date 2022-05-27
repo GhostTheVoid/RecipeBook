@@ -16,7 +16,8 @@ import tools.FileHandler;
 public class ReadCustoms {
 
     // File Names ////////
-    private static final String FILE_FIRST_NAME = "C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\customrecipes\\";
+    private static final String FILE_FIRST_NAME = "C:\\Users\\mrlro_j35sxef\\OneDrive\\Desktop\\Code\\RecipeBook-main\\RecipeBook\\src\\customrecipes";
+    private static final String FILE_FULL = FILE_FIRST_NAME + "\\";   
     
     private static int recipeNum;
     private static LinkedList<String> recipeString;
@@ -36,7 +37,7 @@ public class ReadCustoms {
      * @return the amount of files
      */
     public static int getPackCount (){
-        int readFiles = new File("C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\customrecipes").list().length;
+        int readFiles = new File(FILE_FIRST_NAME).list().length;
         System.out.println("Counting files...........");
         return readFiles;
     }
@@ -47,11 +48,11 @@ public class ReadCustoms {
      * @return an array which contains all the file names in customrecipes
      */
     public static String[] getPackNames() {
-        String[] readFiles = new File("C:\\Users\\m.rowles\\Desktop\\Work Files\\0 Final Project\\RecipeBook\\src\\customrecipes").list();
+        String[] readFiles = new File(FILE_FIRST_NAME).list();
         System.out.println("Reading file names.......\n");
         //System.out.println(getPackCount());
         for (int i = 0; i < readFiles.length; i++) {
-            readFiles[i] = FILE_FIRST_NAME + readFiles[i];
+            readFiles[i] = FILE_FULL + readFiles[i];
             //System.out.println(filenames[i]);
         }
         return readFiles;
@@ -66,7 +67,7 @@ public class ReadCustoms {
     public static void writeRecipe (String fileName, Recipe recipe){
         System.out.println("Writing file.............");
         // Write File ////////
-        String fullFileName  = FILE_FIRST_NAME 
+        String fullFileName  = FILE_FULL 
                 + "cr_" + recipeNum + " (" + fileName + ").txt";
         
         FileHandler fileHandler = new FileHandler(fullFileName);

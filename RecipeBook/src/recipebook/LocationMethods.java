@@ -107,6 +107,7 @@ public class LocationMethods {
             makeWhat();
             return;
         }
+        
         // Asks what ingredients are in the recipe, in which the user will use
         // "|" character to split them
         String q2 = Dialogs.inputRecipe(
@@ -127,6 +128,7 @@ public class LocationMethods {
             makeWhat();
             return;
         }
+        
         String q3 = Dialogs.inputRecipe( 
                 "What are the directions for the "
                 + "recipe? <br>(seperate with the | character)", 
@@ -144,29 +146,8 @@ public class LocationMethods {
             makeWhat();
             return;
         }
-        
-        
-        // TEMPORARY!!!
-        //String q1 = "Garlic Bread (CUSTOM)";
-//        String q2 = "4 cloves garlic, minced| ½ cup (1 stick) butter, softened|"
-//                + "1 baguette or French bread, cut lengthwise|"
-//                + "½ tsp. kosher salt| 2 tbsp. freshly chopped parsley|"
-//                + "¼ cup grated Parmesan";
-//        String q3 = "Preheat oven to 425° and line a large baking sheet with "
-//                + "foil. Make garlic compound butter: In a small bowl, "
-//                + "mix softened butter with garlic, salt, and parsley until "
-//                + "well combined.| Spread cut sides of bread liberally with "
-//                + "garlic butter. Sprinkle with Parmesan.| "
-//                + "Bake until bread is toasty and golden at the edges, "
-//                + "about 10 minutes.";
-        
-        // /////////////
-        
-//        String[] ingredients = q2.split("[|]");
-//        String[] directions  = q3.split("[|]");
 
         if (q1.isEmpty() || q2.isEmpty() || q3.isEmpty() ) {
-            
             throw new NullPointerException("One of the questions is empty. "
                     + "Please try again");
         }

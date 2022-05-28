@@ -174,9 +174,7 @@ public class Recipe {
         
         output += "Ingredients\n";
         for (int i = 0; i < ingredients.length; i++) {
-            if (ingredients[i] != null) {
-                output += "\tcheck\n";
-            }
+            if (ingredients[i] != null) output += "\tcheck\n";
             else System.out.println("Ingredient Error");
         }
         output += "Directions\n";

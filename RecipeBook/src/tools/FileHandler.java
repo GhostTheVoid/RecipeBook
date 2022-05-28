@@ -72,20 +72,15 @@ public class FileHandler
      */
     public void write(LinkedList<String> data) {
         try {                                               // error trap
-            
             //File        file    = convertToFile(filename);  // create file
-            
             File file = new File (filename);
-            
             FileWriter  writer  = new FileWriter(file);     // create writer
-            
-            
             PrintWriter printer = new PrintWriter(writer);  // create printer
+            
             for (int i = 0; i < data.size(); i++) {         // traverse array
                 printer.println(data.get(i));               // write array index
             }
             printer.close();                                // close file
-            
         }
         catch (IOException e) {                             // no file
             System.out.println("I/O error");
